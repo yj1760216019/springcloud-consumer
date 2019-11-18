@@ -1,6 +1,7 @@
 package com.carlinx.cloud.client;
 
 import com.carlinx.cloud.entity.User;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.List;
  * @Create 2019/11/18 21:32
  */
 
+@Component
 public class ProducerServiceInterfaceImpl implements ProducerServiceInterface {
     @Override
     public String sayHello(String name) {
