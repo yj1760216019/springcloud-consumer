@@ -56,12 +56,20 @@
             <version>1.4.6.RELEASE</version>
         </dependency>
 
+        <!--断路器依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
+            <version>1.4.6.RELEASE</version>
+        </dependency>
 
         <dependency>
             <groupId>com.carlinx</groupId>
             <artifactId>springcloud-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+
 
     </dependencies>
 

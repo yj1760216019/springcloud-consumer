@@ -2,6 +2,8 @@ package com.carlinx.cloud.controller;
 
 import com.carlinx.cloud.client.ProducerServiceInterface;
 import com.carlinx.cloud.entity.User;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class ConsumerController {
     @Autowired
     private ProducerServiceInterface producerServiceInterface;
 
+    //***********************************ribbon调用****************************************
 
     @GetMapping("/sayHello1")
     public String sayHello1(String name) {
@@ -60,11 +64,24 @@ public class ConsumerController {
 
 
     @GetMapping("/sayHello3")
-    public String sayHello3(String name) {
+    @HystrixCommand(fallbackMethod = "error",
+        commandProperties = {
+            //修改断路器默认超时时间
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "5000")
+        }
+    )
+    public List<String> sayHello3(String name) {
         String result = restTemplate.getForObject("http://producer/producer/hello?name=" + name, String.class);
-        return result;
+        return Arrays.asList("aa","bb");
     }
 
+    //错误方法   参数和返回值需要和原始方法严格一致
+    public List<String> error(String name){
+        return Arrays.asList("aa","bb");
+    }
+
+
+    //****************************feign调用*************************************
 
     @GetMapping("/sayHello4")
     public String sayHello4(String name) {

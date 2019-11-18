@@ -13,7 +13,7 @@ import java.util.List;
  * @Create 2019/11/17 21:26
  */
 
-@FeignClient(name = "producer")
+@FeignClient(name = "producer",fallback = ProducerServiceInterfaceImpl.class)   //指定断路方法
 public interface ProducerServiceInterface {
 
     @GetMapping("/producer/hello")    //对应服务提供方的接口路径

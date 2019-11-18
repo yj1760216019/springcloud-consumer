@@ -1,21 +1,45 @@
-# Ö¸¶¨ÏîÄ¿Ãû
+# æŒ‡å®šé¡¹ç›®å
 spring:
   application:
     name: consumer
 
-# Ö¸¶¨¶Ë¿ÚºÅ
+# æŒ‡å®šç«¯å£å·
 server:
   port: 7013
 
 
-# ÏòeurekaµÄserver×¢²á·şÎñ
+# å‘eurekaçš„serveræ³¨å†ŒæœåŠ¡
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:7011/eureka/,http://localhost:7021/eureka/,http://localhost:7022/eureka/
 
   instance:
-    # Ã¿¸ô1ÃëÖÓ Ïò×¢²áÖĞĞÄ·¢Ò»´ÎĞÄÌø Ö¤Ã÷×Ô¼º»¹»î×Å
+    # æ¯éš”1ç§’é’Ÿ å‘æ³¨å†Œä¸­å¿ƒå‘ä¸€æ¬¡å¿ƒè·³ è¯æ˜è‡ªå·±è¿˜æ´»ç€
     lease-renewal-interval-in-seconds: 1
-    # ¸æËß×¢²áÖĞĞÄ ³¬¹ı2ÃëÎ´·¢ËÍĞÄÌø ´ú±íÒÑå´»ú ¿ÉÒÔÌŞ³ı
+    # å‘Šè¯‰æ³¨å†Œä¸­å¿ƒ è¶…è¿‡2ç§’æœªå‘é€å¿ƒè·³ ä»£è¡¨å·²å®•æœº å¯ä»¥å‰”é™¤
     lease-expiration-duration-in-seconds: 2
+
+
+# å¼€å¯feignæ–­è·¯å™¨
+feign:
+  hystrix:
+    enabled: true
+
+
+# feign hystrixè®¾ç½®è¶…æ—¶æ—¶é—´
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+
+# ribboè¯»å–è¶…æ—¶æ—¶é—´  è¯»å–è¶…æ—¶åå°±ä¸ä¼šç­‰å¾…ç†”æ–­è¶…æ—¶
+ribbon:
+  ReadTimeout: 5000
